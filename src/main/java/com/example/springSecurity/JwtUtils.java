@@ -29,6 +29,7 @@ public class JwtUtils {
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
+
     // Генерация токена на основе UserDetails
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -42,6 +43,7 @@ public class JwtUtils {
                 .signWith(getSigningKey()) // Подпись
                 .compact(); // Генерация строки
     }
+
     // Извлечение username из токена
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -55,7 +57,7 @@ public class JwtUtils {
     // Проверка валидности токена
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     // Проверка истечения срока действия
